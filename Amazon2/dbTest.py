@@ -1,6 +1,6 @@
 
 from dbHelper import dbHelper
 
-#dbHelper.getAllItems()
-dbHelper.getItemById("AH80")
+dbHelper.getAllItems()
+#dbHelper.getItemById(2)
 
