@@ -73,7 +73,7 @@ def check_login():
         return  render_template(
             'home.html',
             title='Home',
-            message=session['username']+" is logged in...")
+            message= "Welcome "+ session['username'])
     else:
         return render_template(
             'login.html',
