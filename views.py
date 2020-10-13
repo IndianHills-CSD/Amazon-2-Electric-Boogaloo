@@ -10,14 +10,23 @@ from Amazon2 import dbHelper as db
 
 @app.route('/')
 @app.route('/login')
-def home():
+@app.route('/login/<int:status>')
+def login():
     """Renders the home page."""
+    message = ""
+    status = request.args.get('status')
+    if status != None:
+        status = int(status)
+        if status == 1:
+            message = "Invalid Credentials"
+        
     return render_template(
-        'login.html'
+        'login.html',
+        message = message
     )
 
 @app.route('/home')
-def contact():
+def home():
     """Renders the contact page."""
     if not session.get('logged_in'):
         return render_template(
@@ -66,6 +75,7 @@ def check_login():
         password = request.form['password']
         remember = request.form['remember']
         session['logged_in'] = db.dbHelper.login(username,password)
+        
 
     
     if session['logged_in'] == True:
@@ -75,9 +85,8 @@ def check_login():
             title='Home',
             message= "Welcome "+ session['username'])
     else:
-        return render_template(
-            'login.html',
-            message='Invalid credentials.')
+        return redirect(
+            '/login?status=1')
 
 
 @app.route('/register_form',methods=['GET', 'POST'])
@@ -86,8 +95,11 @@ def register_form():
     if request.method == 'POST': 
         username = request.form['username']
         password = request.form['password']
-        remember = request.form['remember']
+        email = request.form['email']
+        db.dbHelper.addNewUser(email,username,password)
+
+    
     
     return render_template(
         'login.html',
-        message='Invalid credentials.')
+        message='Log in with new credentials.')
