@@ -13,8 +13,12 @@ class dbHelper:
                               'Database=Backroom;'
                               'Trusted_Connection=yes;')
         cursor = conn.cursor()
+        count = cursor.execute('''Select Count(EmailID) FROM Backroom.dbo.Users WHERE EmailID = ?''',email)
+        if count.arraysize > 0:
+            return 1
         cursor.execute('''INSERT into Backroom.dbo.Users VALUES(?,?,?)''',email,username,password)
         conn.commit()
+        return 0
 
     #Returns true or false based on if supplied args match db properties
     def login(name,pword):

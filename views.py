@@ -91,13 +91,13 @@ def check_login():
 
 @app.route('/register_form',methods=['GET', 'POST'])
 def register_form():
-
+    status = 0
     if request.method == 'POST': 
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-        db.dbHelper.addNewUser(email,username,password)
-
+        status = db.dbHelper.addNewUser(email,username,password)
+    
     
     
     return render_template(
