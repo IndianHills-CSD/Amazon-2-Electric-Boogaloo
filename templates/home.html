@@ -22,10 +22,14 @@
 </head>
 
 <body>
-
+	<div class="welcome">Welcome {{username}}.</div>
+	<a href="{{ url_for('displayMultiple') }}">View All Items</a>
+	<form action="/search_form" method="post">
+		<input type="text" name="search"/>
+		<input type="submit" />
+	</form>
 	<div class="content">
 		<h2 class="w3-center">Featured Products</h2>
-
 		<div class="w3-content w3-section" style="max-width:500px">
 			<img class="mySlides" src="static/images/laptop.jpg" style="width:100%">
 			<img class="mySlides" src="static/images/minifridge.jpg" style="width:100%">
@@ -33,22 +37,24 @@
 		</div>
 	</div>
 
+
+
 	<script>
 		var myIndex = 0;
 		carousel();
 
 		function carousel() {
 			var i;
-		  	var x = document.getElementsByClassName("mySlides");
-		  	
+			var x = document.getElementsByClassName("mySlides");
+
 			for (i = 0; i < x.length; i++) {
-				x[i].style.display = "none";  
+				x[i].style.display = "none";
 			}
-		  
+
 			myIndex++;
-		  	if (myIndex > x.length) {myIndex = 1}    
-		  	x[myIndex-1].style.display = "block";  
-		  	setTimeout(carousel, 3000); // Change image every 3 seconds
+			if (myIndex > x.length) { myIndex = 1 }
+			x[myIndex - 1].style.display = "block";
+			setTimeout(carousel, 3000); // Change image every 3 seconds
 		}
 	</script>
 </body>

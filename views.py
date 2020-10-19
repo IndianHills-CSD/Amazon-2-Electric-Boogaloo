@@ -6,7 +6,7 @@ from datetime import datetime
 from flask import render_template, request, redirect, session
 from Amazon2 import app
 app.secret_key = "abc"
-from Amazon2 import dbHelper as db
+from .dbHelper import dbHelper
 
 @app.route('/')
 @app.route('/login')
@@ -35,16 +35,30 @@ def home():
 
     return render_template(
         'home.html',
+        username = session['username']
     )
 
-@app.route('/about')
-def about():
-    """Renders the about page."""
+
+@app.route('/displaySingle/<int:itemId>')
+@app.route('/displaySingle')
+def displaySingle(itemId):
+    #itemId = request.args.get('itemId')
+    item = dbHelper.getItemById(itemId)
     return render_template(
-        'about.html',
-        title='About',
-        year=datetime.now().year,
-        message='Your application description page.'
+        'displaySingle.html',
+        title='Display Single',
+        item = item
+    )
+
+
+@app.route('/displayMultiple')
+def displayMultiple():
+    """Renders the about page."""
+    items = dbHelper.getAllItems()
+    return render_template(
+        'displayMultiple.html',
+        title='Display Multiple',
+        items = items
     )
 
 
@@ -74,16 +88,14 @@ def check_login():
         username = request.form['username']
         password = request.form['password']
         remember = request.form['remember']
-        session['logged_in'] = db.dbHelper.login(username,password)
+        session['logged_in'] = dbHelper.login(username,password)
         
 
     
     if session['logged_in'] == True:
         session['username'] = username
-        return  render_template(
-            'home.html',
-            title='Home',
-            message= "Welcome "+ session['username'])
+        return  redirect(
+            '/home')
     else:
         return redirect(
             '/login?status=1')
@@ -96,10 +108,26 @@ def register_form():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-        status = db.dbHelper.addNewUser(email,username,password)
+        status = dbHelper.addNewUser(email,username,password)
     
     
     
     return render_template(
         'login.html',
         message='Log in with new credentials.')
+
+
+
+@app.route('/search_form',methods=['GET', 'POST'])
+def search_form():
+    if request.method == 'POST': 
+        value = request.form['search']
+        items = dbHelper.searchByTitle(value)
+    
+    
+    
+    return render_template(
+        'displayMultiple.html',
+        title='Display Multiple',
+        items = items
+    )

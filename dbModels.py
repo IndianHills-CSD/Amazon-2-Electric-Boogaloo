@@ -1,13 +1,14 @@
 
 class postModel:
     """Model to map post info from db to python class"""
-    def __init__(self,id,auth,title,desc,loc,price):
+    def __init__(self,id,auth,title,desc,loc,price, imagePath):
         self.PostID = id
         self.Author = auth
         self.Title = title
         self.Description = desc
         self.Location = loc
         self.Price = price
+        self.imagePath = imagePath
 
     def getId(self):
         return self.PostID
@@ -26,6 +27,9 @@ class postModel:
 
     def getPrice(self):
         return self.Price
+
+    def getPath(self):
+        return self.imagePath
 
 
     
