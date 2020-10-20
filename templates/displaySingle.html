@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                Id Number
+            </td>
+            <td>
+                {{item.getId()}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+               Author
+            </td>
+            <td>
+                {{item.getAuthor()}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+               Title
+            </td>
+            <td>
+                {{item.getTitle()}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+               Description
+            </td>
+            <td>
+                {{item.getDescription()}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Location
+            </td>
+            <td>
+                {{item.getLocation()}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+               Price
+            </td>
+            <td>
+               ${{item.getPrice()}}
+            </td>
+        </tr>
+    </table>
+    <img src="{{url_for('static', filename=item.getPath())}}" />
+
+</body>
+</html>
