@@ -24,8 +24,9 @@
 <body>
 	<div class="welcome">Welcome {{username}}.</div>
 	<a href="{{ url_for('displayMultiple') }}">View All Items</a>
+	<a href="{{ url_for('post') }}">Add new item</a>
 	<form action="/search_form" method="post">
-		<input type="text" name="search"/>
+		<input type="text" name="search" />
 		<input type="submit" />
 	</form>
 	<div class="content">

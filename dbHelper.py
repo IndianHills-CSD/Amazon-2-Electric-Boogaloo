@@ -35,14 +35,16 @@ class dbHelper:
             logged_in = True
         return logged_in
     
-    #Adds new item with supplied arguments
+     #Adds new item with supplied arguments
     def addItem(auth,title,desc,loc,price):
+
+        path = "images/laptop.jpg"
         conn = pyodbc.connect('Driver={SQL Server Native Client 11.0};'
                               'Server=(localdb)\MSSQLLocalDB;'
                               'Database=Backroom;'
                               'Trusted_Connection=yes;')
         cursor = conn.cursor()
-        cursor.execute('''INSERT into Backroom.dbo.Post(Author,Title,"Desc","Location",Price) VALUES(?,?,?,?,?)''',auth,title,desc,loc,price)
+        cursor.execute('''INSERT into Backroom.dbo.Post(Author,Title,"PostDescription","Location",Price,ImagePath) VALUES(?,?,?,?,?,?)''',auth,title,desc,loc,price,path)
         conn.commit()
         
     #Returns single post item based on id

@@ -78,6 +78,13 @@ def checkout():
         title='Checkout'
     )
 
+@app.route('/post')
+def post():
+    """Renders the register new user page."""
+    return render_template(
+        'post.html',
+    )
+
 
 #Form Submission Methods
 
@@ -105,12 +112,46 @@ def check_login():
 def register_form():
     status = 0
     if request.method == 'POST': 
-        username = request.form['username']
-        password = request.form['password']
+        #username = request.form['username']
+        #password1 = request.form['password']
+        #password2 = request.form['psw-repeat']
+        #email = request.form['email']
+
+        username = request.form['Romulus1408']
+        password1 = request.form['aB123455']
+        password2 = request.form['aB123456']
         email = request.form['email']
+
         status = dbHelper.addNewUser(email,username,password)
     
     
+
+        if password1 != password2:
+            status = 2
+        else:
+            if (any(c.isdiget()) for c in password1):
+                status = 0
+            else:
+                status = 3
+        if status == 0:
+            if (any(c.isupper()) for c in password1):
+                status = 0
+            else:
+                status = 4
+        if status == 0:
+            if (any(c.islower()) for c in password1):
+                status = 0
+            else:
+                status = 5
+        if status == 0:
+            if len(password1) <= 7:
+                status = 6
+        if status != 0:
+            return redirect(
+            '/login?status='+str(status))
+        else:
+            status = db.dbHelper.addNewUser(email,username,password1)
+
     
     return render_template(
         'login.html',
@@ -131,3 +172,19 @@ def search_form():
         title='Display Multiple',
         items = items
     )
+
+
+@app.route('/createPost_form',methods=['GET', 'POST'])
+def createPost_form():
+    if request.method == 'POST': 
+        auth = session['username']
+        title = request.form['title']
+        category = request.form['category']
+        location = request.form['location']
+        price = request.form['price']
+        description = request.form['description']
+        dbHelper.addItem(auth,title,description,location,price)
+    
+    
+    return redirect(
+            '/displayMultiple')
