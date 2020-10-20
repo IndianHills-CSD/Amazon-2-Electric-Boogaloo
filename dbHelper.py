@@ -37,12 +37,14 @@ class dbHelper:
     
     #Adds new item with supplied arguments
     def addItem(auth,title,desc,loc,price):
+
+        path = "images/laptop.jpg"
         conn = pyodbc.connect('Driver={SQL Server Native Client 11.0};'
                               'Server=(localdb)\MSSQLLocalDB;'
                               'Database=Backroom;'
                               'Trusted_Connection=yes;')
         cursor = conn.cursor()
-        cursor.execute('''INSERT into Backroom.dbo.Post(Author,Title,"Desc","Location",Price) VALUES(?,?,?,?,?)''',auth,title,desc,loc,price)
+        cursor.execute('''INSERT into Backroom.dbo.Post(Author,Title,"PostDescription","Location",Price,ImagePath) VALUES(?,?,?,?,?,?)''',auth,title,desc,loc,price,path)
         conn.commit()
         
     #Returns single post item based on id
@@ -81,6 +83,8 @@ class dbHelper:
             post = postModel(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
             posts.append(post)
         return posts
+
+
 
     def searchByTitle(value):
         conn = pyodbc.connect('Driver={SQL Server Native Client 11.0};'

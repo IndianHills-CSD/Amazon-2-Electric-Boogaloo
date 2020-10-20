@@ -79,6 +79,14 @@ def checkout():
     )
 
 
+@app.route('/post')
+def post():
+    """Renders the register new user page."""
+    return render_template(
+        'post.html',
+    )
+
+
 #Form Submission Methods
 
 @app.route('/login_form',methods=['GET', 'POST'])
@@ -131,3 +139,18 @@ def search_form():
         title='Display Multiple',
         items = items
     )
+
+@app.route('/createPost_form',methods=['GET', 'POST'])
+def createPost_form():
+    if request.method == 'POST': 
+        auth = session['username']
+        title = request.form['title']
+        category = request.form['category']
+        location = request.form['location']
+        price = request.form['price']
+        description = request.form['description']
+        dbHelper.addItem(auth,title,description,location,price)
+    
+    
+    return redirect(
+            '/displayMultiple')
