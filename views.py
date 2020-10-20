@@ -86,6 +86,7 @@ def post():
     )
 
 
+
 #Form Submission Methods
 
 @app.route('/login_form',methods=['GET', 'POST'])
@@ -172,7 +173,6 @@ def search_form():
         title='Display Multiple',
         items = items
     )
-
 
 @app.route('/createPost_form',methods=['GET', 'POST'])
 def createPost_form():

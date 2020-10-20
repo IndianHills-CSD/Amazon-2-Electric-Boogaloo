@@ -84,6 +84,8 @@ class dbHelper:
             posts.append(post)
         return posts
 
+
+
     def searchByTitle(value):
         conn = pyodbc.connect('Driver={SQL Server Native Client 11.0};'
                               'Server=(localdb)\MSSQLLocalDB;'
