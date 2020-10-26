@@ -92,14 +92,26 @@ class dbHelper:
                               'Database=Backroom;'
                               'Trusted_Connection=yes;')
         cursor = conn.cursor()
-        sql = 'SELECT * FROM Backroom.dbo.Post WHERE Title LIKE %sand%'
-        args = [value]
-        cursor.execute(sql)
+        cursor.execute("SELECT * FROM Backroom.dbo.Post WHERE Title LIKE ?", "%"+value+"%")
         posts = []
         for row in cursor:
             post = postModel(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
             posts.append(post)
         return posts
+
+    def get3Random():
+        conn = pyodbc.connect('Driver={SQL Server Native Client 11.0};'
+                              'Server=(localdb)\MSSQLLocalDB;'
+                              'Database=Backroom;'
+                              'Trusted_Connection=yes;')
+        cursor = conn.cursor()
+        cursor.execute('SELECT TOP 3 * FROM Backroom.dbo.Post')
+        posts = []
+        for row in cursor:
+            post = postModel(row[0],row[1],row[2],row[3],row[4],row[5],row[6])
+            posts.append(post)
+        return posts
+
     
     #method to get all current categories
 

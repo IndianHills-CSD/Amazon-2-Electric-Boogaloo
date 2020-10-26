@@ -32,10 +32,11 @@ def home():
         return render_template(
             'login.html',
             message='Logged out due to inactivity.')
-
+    items = dbHelper.get3Random()
     return render_template(
         'home.html',
-        username = session['username']
+        username = session['username'],
+        items = items
     )
 
 

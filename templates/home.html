@@ -1,63 +1,175 @@
-﻿<!doctype html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta content="text/html; charset=iso-8859-2" http-equiv="Content-Type">
 	
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="generator" content="Jekyll v4.1.1">	
 	
 	<title>Home</title>
 	
 	<style>
-		.content {
-			max-width: 500px;
-			margin: auto;
-			background-color: aqua
+
+		img{
+			max-height:400px;
+		}
+
+		.bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
 		}
 		
-		.mySlides {display:none;}
-		
-	</style>
-</head>
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+		body {
+  	min-height: 75rem;
+  	padding-top: 4.5rem;
+}
 
+
+.jumbotron {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 0;
+  background-color: #fff;
+}
+@media (min-width: 768px) {
+  .jumbotron {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron h1 {
+  font-weight: 300;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
+.price{
+	
+  color: #000;
+  font-size: 22px;
+}
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+footer p {
+  margin-bottom: .25rem;
+}
+    </style>
+	
+	<link rel="stylesheet" type="text/css" href="home.css">
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	
+</head>
+	
 <body>
-	<div class="welcome">Welcome {{username}}.</div>
-	<a href="{{ url_for('displayMultiple') }}">View All Items</a>
-	<br />
-	<a href="{{ url_for('post') }}">Add new item</a>
-	<form action="/search_form" method="post">
-		<input type="text" name="search" />
-		<input type="submit" />
-	</form>
-	<div class="content">
-		<h2 class="w3-center">Featured Products</h2>
-		<div class="w3-content w3-section" style="max-width:500px">
-			<img class="mySlides" src="static/images/laptop.jpg" style="width:100%">
-			<img class="mySlides" src="static/images/minifridge.jpg" style="width:100%">
-			<img class="mySlides" src="static/images/textbook.jpg" style="width:100%">
+
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+
+			<span class="navbar-toggler-icon"></span>
+
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Home</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="{{ url_for('displayMultiple') }}">Shop</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="{{ url_for('post') }}">Sell</a>
+				</li>
+			</ul>
+
+			<form class="form-inline mt-2 mt-md-0" action="/search_form" method="post">
+				<input class="form-control mr-sm-2" name="search" type="text" placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+			</form>
+
+		</div>
+	</nav>
+
+	<header class="page-header header container-fluid">
+		<section class="jumbotron text-center">
+			<div class="container">
+				<h1>Featured Products</h1>
+			</div>
+		</section>
+	</header>
+	<div class="album py-5 bg-light">
+		<div class="container">
+			<div class="row">
+
+				{%for item in items %}
+				<div class="col-md-4">
+					<div class="card mb-4 shadow-sm">
+
+						<img src="{{url_for('static', filename=item.getPath())}}" />
+						<div class="card-body">
+
+							<h1 class="card-title">{{item.getTitle()}}</h1>
+							<p class="card-text">{{item.getDescription()}}</p>
+
+							<div class="d-flex justify-content-between align-items-center">
+
+								<div class="btn-group">
+									<button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+								</div>
+
+								<small class="price">${{item.getPrice()}}</small>
+
+							</div>
+						</div>
+					</div>
+				</div>
+				{%endfor%}
+
+			</div>
 		</div>
 	</div>
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 
+	<!-- JavaScript -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-
-	<script>
-		var myIndex = 0;
-		carousel();
-
-		function carousel() {
-			var i;
-			var x = document.getElementsByClassName("mySlides");
-
-			for (i = 0; i < x.length; i++) {
-				x[i].style.display = "none";
-			}
-
-			myIndex++;
-			if (myIndex > x.length) { myIndex = 1 }
-			x[myIndex - 1].style.display = "block";
-			setTimeout(carousel, 3000); // Change image every 3 seconds
-		}
-	</script>
+	<script src="home.js"></script>
+	<footer class="text-muted">
+		<div class="container">
+			<p class="float-right">
+				<a href="#">Back to top</a>
+			</p>
+			<p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+			<p>New to Bootstrap? <a href="https://getbootstrap.com/">Visit the homepage</a> or read our <a href="../getting-started/introduction/">getting started guide</a>.</p>
+		</div>
+	</footer>
 </body>
+				
+
+	
 </html>
