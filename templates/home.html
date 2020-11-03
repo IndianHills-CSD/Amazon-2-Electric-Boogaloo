@@ -138,7 +138,7 @@ footer p {
 							<div class="d-flex justify-content-between align-items-center">
 
 								<div class="btn-group">
-									<button type="button" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+									<a href="{{ url_for('displaySingle',itemId=item.getId())}}">View</a>
 								</div>
 
 								<small class="price">${{item.getPrice()}}</small>
